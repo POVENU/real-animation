@@ -1,0 +1,20 @@
+english:
+  female:
+    voice: alloy
+
+  male:
+    voice: ash
+
+telugu:
+  female:
+    voice: alloy
+
+  male:
+    voice: ash
+
+hindi:
+  female:
+    voice: alloy
+
+  male:
+    voice: ash
