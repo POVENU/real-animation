@@ -1,0 +1,80 @@
+storyboard: |
+  Create a professional animated movie storyboard.
+
+  Keep every character visually identical.
+
+  Return JSON only.
+
+character_sheet: |
+  Generate a complete character sheet.
+
+  Include:
+
+  - Face
+
+  - Hair
+
+  - Clothes
+
+  - Shoes
+
+  - Colors
+
+  - Accessories
+
+  - Height
+
+  - Body type
+
+  - Age
+
+  Keep this identical in every scene.
+
+scene_image: |
+  Pixar quality.
+
+  Maintain character consistency.
+
+  Cinematic lighting.
+
+  Soft shadows.
+
+  Highly expressive faces.
+
+  Same costume.
+
+  Same hairstyle.
+
+  Same proportions.
+
+  No text.
+
+animation: |
+  Animate naturally.
+
+  Blink eyes.
+
+  Mouth movement.
+
+  Head movement.
+
+  Hand gestures.
+
+  Cloth physics.
+
+  Hair movement.
+
+  Natural walking.
+
+  Camera movement.
+
+  Maintain identical character.
+
+lipsync: |
+  Synchronize mouth with narration.
+
+  Preserve facial expressions.
+
+  Natural jaw movement.
+
+  Tongue movement when visible.
