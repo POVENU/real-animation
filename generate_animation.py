@@ -489,3 +489,229 @@ class AnimationPipeline:
             project["storyboard"]
 
         )
+
+##########################################################################
+
+    def resume_project(
+
+        self,
+
+        project_file="output/project.json",
+
+    ):
+
+        import json
+
+        file = Path(project_file)
+
+        if not file.exists():
+
+            logger.error(
+
+                "No previous project found."
+
+            )
+
+            return None
+
+        logger.info(
+
+            f"Loading project: {project_file}"
+
+        )
+
+        with open(
+
+            file,
+
+            "r",
+
+            encoding="utf8",
+
+        ) as fp:
+
+            project = json.load(fp)
+
+        return project
+
+##########################################################################
+
+    def export_project(
+
+        self,
+
+        destination,
+
+    ):
+
+        destination = Path(destination)
+
+        destination.mkdir(
+
+            parents=True,
+
+            exist_ok=True,
+
+        )
+
+        logger.info(
+
+            "Exporting project..."
+
+        )
+
+        folders = [
+
+            "output",
+
+            "config",
+
+            "logs",
+
+        ]
+
+        for folder in folders:
+
+            src = Path(folder)
+
+            dst = destination / folder
+
+            if src.exists():
+
+                shutil.copytree(
+
+                    src,
+
+                    dst,
+
+                    dirs_exist_ok=True,
+
+                )
+
+        logger.success(
+
+            "Project exported."
+
+        )
+
+##########################################################################
+
+    def show_summary(
+
+        self,
+
+        movie,
+
+    ):
+
+        logger.info("")
+
+        logger.info("=" * 70)
+
+        logger.info("REAL ANIMATION STUDIO")
+
+        logger.info("=" * 70)
+
+        logger.info(f"Movie : {movie}")
+
+        logger.info(f"Output : {Path(movie).parent}")
+
+        logger.info("=" * 70)
+
+##########################################################################
+
+    def run_resume(
+
+        self,
+
+    ):
+
+        project = self.resume_project()
+
+        if project is None:
+
+            return
+
+        scene_images = list(
+
+            Path("output/images").glob("scene_*.png")
+
+        )
+
+        rendered = self.animate_scenes(
+
+            project,
+
+            scene_images,
+
+        )
+
+        narration = self.create_audio(
+
+            project,
+
+        )
+
+        subtitles = self.create_subtitles(
+
+            project,
+
+        )
+
+        audio = self.create_final_audio(
+
+            narration,
+
+        )
+
+        movie = self.build_movie(
+
+            rendered,
+
+            audio,
+
+            subtitles,
+
+        )
+
+        self.show_summary(
+
+            movie,
+
+        )
+
+##########################################################################
+
+    def version(
+
+        self,
+
+    ):
+
+        return "2.0.0"
+
+##########################################################################
+
+    def info(
+
+        self,
+
+    ):
+
+        logger.info(
+
+            f"Version : {self.version()}"
+
+        )
+
+        logger.info(
+
+            "Provider : OpenAI + Kling"
+
+        )
+
+        logger.info(
+
+            "Pipeline : Story -> Images -> Animation -> Audio -> Movie"
+
+        )
