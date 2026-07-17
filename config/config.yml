@@ -1,0 +1,71 @@
+project:
+  name: "Real Animation Studio"
+  version: "1.0.0"
+
+provider:
+  image: openai
+  video: kling
+  tts: openai
+
+openai:
+  model: gpt-5.5
+  image_model: gpt-image-1
+
+kling:
+  enabled: true
+  api_base: ${KLING_API_BASE}
+  api_key: ${KLING_API_KEY}
+  model: kling-v2
+  timeout: 600
+  poll_interval: 5
+  retry: 5
+
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  format: mp4
+  codec: h264
+  bitrate: 10M
+  quality: high
+
+scene:
+  default_duration: 8
+  transition_duration: 0.5
+  max_parallel_jobs: 2
+
+character:
+  consistency: true
+  reference_images: true
+  lock_costume: true
+  lock_face: true
+  lock_colors: true
+
+camera:
+  default:
+    - slow dolly
+    - orbit
+    - crane
+    - push in
+    - zoom out
+
+audio:
+  background_volume: 0.15
+  narration_volume: 1.0
+  fade_in: 1.0
+  fade_out: 1.0
+
+subtitle:
+  enabled: true
+  font: Arial
+  size: 54
+  color: white
+  stroke: black
+
+output:
+  directory: output
+  temp_directory: temp
+  keep_temp: false
+
+logging:
+  level: INFO
