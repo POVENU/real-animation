@@ -219,6 +219,270 @@ class AnimationPipeline:
             "Generating subtitles..."
 
         )
+##########################################################################
+
+    def create_final_audio(
+
+        self,
+
+        narration_file,
+
+        background_music=None,
+
+    ):
+
+        logger.info(
+
+            "Preparing final audio..."
+
+        )
+
+        if background_music is None:
+
+            background_music = Path(
+
+                "assets/music/background.mp3"
+
+            )
+
+        output = Path(
+
+            "output/audio/final_audio.mp3"
+
+        )
+
+        if background_music.exists():
+
+            return self.audio.merge_music(
+
+                narration_file,
+
+                background_music,
+
+                output,
+
+            )
+
+        logger.warning(
+
+            "Background music not found. Using narration only."
+
+        )
+
+        return narration_file
+
+##########################################################################
+
+    def build_movie(
+
+        self,
+
+        videos,
+
+        audio,
+
+        subtitles,
+
+    ):
+
+        logger.info(
+
+            "Building final movie..."
+
+        )
+
+        return self.ffmpeg.build_movie(
+
+            videos=videos,
+
+            audio=audio,
+
+            subtitles=subtitles,
+
+        )
+
+##########################################################################
+
+    def run(
+
+        self,
+
+        topic,
+
+        language="English",
+
+        duration="short",
+
+    ):
+
+        logger.info(
+
+            "=" * 60
+
+        )
+
+        logger.info(
+
+            "REAL ANIMATION STUDIO STARTED"
+
+        )
+
+        logger.info(
+
+            "=" * 60
+
+        )
+
+        ##################################################
+
+        project = self.create_story(
+
+            topic,
+
+            language,
+
+            duration,
+
+        )
+
+        ##################################################
+
+        self.create_character_images(
+
+            project
+
+        )
+
+        ##################################################
+
+        scene_images = self.create_scene_images(
+
+            project
+
+        )
+
+        ##################################################
+
+        rendered_videos = self.animate_scenes(
+
+            project,
+
+            scene_images,
+
+        )
+
+        ##################################################
+
+        narration = self.create_audio(
+
+            project
+
+        )
+
+        ##################################################
+
+        subtitles = self.create_subtitles(
+
+            project
+
+        )
+
+        ##################################################
+
+        final_audio = self.create_final_audio(
+
+            narration
+
+        )
+
+        ##################################################
+
+        final_movie = self.build_movie(
+
+            rendered_videos,
+
+            final_audio,
+
+            subtitles,
+
+        )
+
+        ##################################################
+
+        logger.success(
+
+            "=" * 60
+
+        )
+
+        logger.success(
+
+            "PROJECT COMPLETED SUCCESSFULLY"
+
+        )
+
+        logger.success(
+
+            f"Output : {final_movie}"
+
+        )
+
+        logger.success(
+
+            "=" * 60
+
+        )
+
+        return final_movie
+
+##########################################################################
+
+    def clean(
+
+        self,
+
+    ):
+
+        logger.info(
+
+            "Cleaning temporary files..."
+
+        )
+
+        clean_temp()
+
+##########################################################################
+
+    def verify_assets(
+
+        self,
+
+    ):
+
+        folders = [
+
+            "assets",
+
+            "config",
+
+            "output",
+
+        ]
+
+        for folder in folders:
+
+            path = Path(folder)
+
+            if not path.exists():
+
+                logger.warning(
+
+                    f"Missing folder: {folder}"
+
+                )
+
+        return True
+     
 
         return self.subtitle.create_story_srt(
 
