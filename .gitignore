@@ -1,0 +1,71 @@
+# Python
+
+__pycache__/
+
+*.pyc
+
+*.pyo
+
+*.pyd
+
+*.egg-info/
+
+.venv/
+
+venv/
+
+# IDE
+
+.idea/
+
+.vscode/
+
+# Secrets
+
+.env
+
+# Output
+
+output/
+
+temp/
+
+logs/
+
+# Mac
+
+.DS_Store
+
+# Windows
+
+Thumbs.db
+
+# FFmpeg
+
+*.mp4
+
+*.mov
+
+*.avi
+
+*.wav
+
+*.aac
+
+*.mp3
+
+# Images
+
+*.png
+
+*.jpg
+
+*.jpeg
+
+# Cache
+
+.cache/
+
+.pytest_cache/
+
+.mypy_cache/
