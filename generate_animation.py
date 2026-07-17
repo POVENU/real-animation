@@ -715,3 +715,177 @@ class AnimationPipeline:
             "Pipeline : Story -> Images -> Animation -> Audio -> Movie"
 
         )
+
+##########################################################################
+# CLI
+##########################################################################
+
+def build_parser():
+
+    parser = argparse.ArgumentParser(
+
+        description="Real Animation Studio"
+
+    )
+
+    parser.add_argument(
+
+        "--topic",
+
+        type=str,
+
+        help="Story topic",
+
+    )
+
+    parser.add_argument(
+
+        "--language",
+
+        default="English",
+
+    )
+
+    parser.add_argument(
+
+        "--duration",
+
+        default="short",
+
+        choices=[
+
+            "short",
+
+            "medium",
+
+            "long",
+
+        ],
+
+    )
+
+    parser.add_argument(
+
+        "--resume",
+
+        action="store_true",
+
+    )
+
+    parser.add_argument(
+
+        "--export",
+
+        type=str,
+
+        default=None,
+
+    )
+
+    parser.add_argument(
+
+        "--clean",
+
+        action="store_true",
+
+    )
+
+    parser.add_argument(
+
+        "--version",
+
+        action="store_true",
+
+    )
+
+    return parser
+
+
+##########################################################################
+
+def main():
+
+    parser = build_parser()
+
+    args = parser.parse_args()
+
+    pipeline = AnimationPipeline()
+
+    if args.version:
+
+        pipeline.info()
+
+        sys.exit(0)
+
+    if args.clean:
+
+        pipeline.clean()
+
+        logger.success(
+
+            "Temporary files removed."
+
+        )
+
+        sys.exit(0)
+
+    if args.resume:
+
+        pipeline.run_resume()
+
+        sys.exit(0)
+
+    if not args.topic:
+
+        parser.print_help()
+
+        sys.exit(1)
+
+    try:
+
+        movie = pipeline.run(
+
+            topic=args.topic,
+
+            language=args.language,
+
+            duration=args.duration,
+
+        )
+
+        if args.export:
+
+            pipeline.export_project(
+
+                args.export
+
+            )
+
+        pipeline.show_summary(
+
+            movie
+
+        )
+
+    except KeyboardInterrupt:
+
+        logger.error(
+
+            "Cancelled by user."
+
+        )
+
+        sys.exit(1)
+
+    except Exception as ex:
+
+        logger.exception(ex)
+
+        sys.exit(1)
+
+
+##########################################################################
+
+if __name__ == "__main__":
+
+    main()
